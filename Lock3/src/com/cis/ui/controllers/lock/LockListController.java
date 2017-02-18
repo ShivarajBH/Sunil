@@ -25,6 +25,7 @@ public class LockListController implements Controller{
 	public ModelAndView handleRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		
+		System.out.println("Lock");
 		List<LockBean> locks=lockService.getAllLocks();
 		
 		request.setAttribute("locks",locks);
