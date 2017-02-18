@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation"
+			value="classpath:hibernate.cfg.xml">
+		</property>
+	</bean>
+	
+	     <!-- add hibernate using hibernatetemplate -->
+	     
+	     
+	<bean id="ht" class="org.springframework.orm.hibernate3.HibernateTemplate">
+	  <!-- add the sessionfactory object to hibernate template -->
+	   <property name="sessionFactory">
+	    <ref bean="sessionFactory"/>
+	   </property>
+	</bean>
+	
+	            <!-- dao -->
+	            
+	
+	<!-- ************************* moaddi projects******************************************* -->
+	
+	<bean id="lockDAO" class="com.cis.dao.impl.LockDAOImpl">
+	<constructor-arg>
+	<ref bean="ht"/>
+    </constructor-arg>
+	</bean>
+	
+	
+	<!-- ************************* moaddi projects******************************************* -->
+	
+	
+	<bean id="lockService" class="com.cis.service.impl.LockServiceImpl">
+		<constructor-arg>
+			<ref bean="lockDAO"/>
+		</constructor-arg>
+	</bean>
+		
+		      <!-- viewResolver -->
+		
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+		
+	</bean>
+	<!--  for tiles  -->
+	
+	
+	
+	
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				
+				
+				
+				<!-- ************************* moaddi projects******************************************* -->
+			
+				<!-- Item                 -->
+				<prop key="/insertlock.htm">
+				addLockForm
+				</prop>
+				<prop key="/locklist.htm">
+				lockListController
+				</prop>
+				<prop key="/view.htm">
+			    lockViewController
+				</prop>
+				<prop key="/editlock.htm">
+				editLockFormController
+				</prop> 
+				<prop key="/dellock.htm">
+				deleteLockController
+				</prop>
+			
+				
+			</props>
+		</property>
+	</bean>
+	
+	
+	     
+	
+	<!-- ************************* moaddi projects******************************************* -->
+	
+	<!--   Item                                -->
+    	<bean class="com.cis.ui.controllers.lock.AddLockFormController" id="addLockForm">
+		<property name="formView">
+			<value>WEB-INF/Locks/insertlock</value>
+		</property>
+		<property name="commandName">
+			<value>addLock</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.lock.LockForm</value>
+		</property>
+		<!-- <property name="validator">
+			<ref bean="employeeValidator"/>
+		</property> -->
+		<property name="lockService"><ref bean="lockService"/></property>
+	</bean>
+	
+	<bean class="com.cis.ui.controllers.lock.EditLockFormController" id="editLockFormController">
+		<property name="formView">
+			<value>WEB-INF/Locks/editlock</value>
+		</property>
+		<property name="commandName">
+			<value>editlock</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.lock.LockForm</value>
+		</property>
+		<property name="lockService"><ref bean="lockService"/></property>
+	</bean> 
+	
+	<bean class="com.cis.ui.controllers.lock.LockViewController" id="lockViewController">
+		
+		<property name="lockService">
+			<ref bean="lockService"/>
+		</property>
+	</bean>
+	<bean class="com.cis.ui.controllers.lock.DeleteLockController" id="deleteLockController">
+		<property name="lockDAO">
+			<ref bean="lockDAO"/>
+		</property>
+	</bean>
+	
+	<!-- list data -->
+	
+	<!-- List For Item  -->
+	
+	<bean class="com.cis.ui.controllers.lock.LockListController" id="lockListController">
+		 <property name="lockService">
+			<ref bean="lockService"/>
+		</property>
+			</bean>
+	
+	<!-- for PDf -->
+	
+	
+ 
+</beans>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.cis.dao.model.Lock"  table="Locks">
+         <id name="lockSno" type="java.lang.Integer">
+            <column name="lockSno" />
+             <generator class="increment" /> 
+        </id> 
+        <property name="lockPrice" type="java.lang.Integer">
+            <column name="lockPrice" />
+        </property>
+        <property name="lockModel" type="java.lang.String">
+            <column name="lockModel" />
+        </property>
+        <property name="lockColor" type="java.lang.String">
+            <column name="lockColor" />
+        </property>
+        
+        <property name="lockKind" type="java.lang.String">
+            <column name="lockKind" />
+        </property>
+        <property name="lockSize" type="java.lang.Integer">
+            <column name="lockSizel" />
+        </property>
+        <property name="height" type="java.lang.String">
+            <column name="height" />
+        </property>
+         <property name="width" type="java.lang.Integer">
+            <column name="width" />
+        </property>
+        
+         <property name="weight" type="java.lang.Integer">
+            <column name="weight" />
+        </property>
+        
+             <property name="depth" type="java.lang.Integer">
+            <column name="depth" />
+        </property>
+        
+        <property name="wareHouse" type="java.lang.String">
+            <column name="wareHouse" />
+        </property>
+        
+    </class>
+</hibernate-mapping>
